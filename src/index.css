@@ -1,28 +1,1040 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(20px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+/* ── Orderly SDK SOLINU Theme ── */
+:root {
+  /* base panel colors: 1=lightest, 10=darkest (page bg) */
+  --oui-color-base-1: 55 52 72;
+  --oui-color-base-2: 48 45 64;
+  --oui-color-base-3: 42 39 56;
+  --oui-color-base-4: 36 34 50;
+  --oui-color-base-5: 30 28 44;
+  --oui-color-base-6: 24 22 38;
+  --oui-color-base-7: 20 18 32;
+  --oui-color-base-8: 16 14 26;
+  --oui-color-base-9: 12 11 20;
+  --oui-color-base-10: 8 8 14;
+  --oui-color-base-foreground: 255 255 255;
+
+  /* primary — gold */
+  --oui-color-primary: 255 215 0;
+  --oui-color-primary-light: 255 230 70;
+  --oui-color-primary-darken: 218 175 0;
+  --oui-color-primary-contrast: 10 10 18;
+
+  --oui-color-link: 255 215 0;
+  --oui-color-link-light: 255 230 70;
+
+  --oui-color-secondary: 255 255 255;
+  --oui-color-tertiary: 200 200 210;
+  --oui-color-quaternary: 160 160 175;
+
+  /* semantic — green closer to trading standard, less neon */
+  --oui-color-success: 14 203 129;
+  --oui-color-success-light: 50 230 160;
+  --oui-color-success-darken: 0 160 100;
+  --oui-color-success-contrast: 255 255 255;
+
+  --oui-color-danger: 246 70 93;
+  --oui-color-danger-light: 255 120 140;
+  --oui-color-danger-darken: 220 50 75;
+  --oui-color-danger-contrast: 255 255 255;
+
+  --oui-color-warning: 255 209 70;
+  --oui-color-warning-light: 255 229 133;
+  --oui-color-warning-darken: 255 152 0;
+  --oui-color-warning-contrast: 255 255 255;
+
+  /* trading */
+  --oui-color-trading-profit: 14 203 129;
+  --oui-color-trading-profit-contrast: 255 255 255;
+  --oui-color-trading-loss: 246 70 93;
+  --oui-color-trading-loss-contrast: 255 255 255;
+
+  /* surfaces */
+  --oui-color-fill: 20 18 32;
+  --oui-color-fill-active: 28 26 42;
+  --oui-color-line: 255 255 255;
+
+  /* gradients — gold themed */
+  --oui-gradient-primary-start: 100 70 0;
+  --oui-gradient-primary-end: 255 215 0;
+  --oui-gradient-secondary-start: 120 90 10;
+  --oui-gradient-secondary-end: 255 215 0;
+  --oui-gradient-success-start: 0 80 50;
+  --oui-gradient-success-end: 14 203 129;
+  --oui-gradient-danger-start: 120 20 40;
+  --oui-gradient-danger-end: 246 70 93;
+  --oui-gradient-brand-start: 255 240 180;
+  --oui-gradient-brand-end: 255 215 0;
+  --oui-gradient-brand-stop-start: 6.62%;
+  --oui-gradient-brand-stop-end: 86.5%;
+  --oui-gradient-brand-angle: 17.44deg;
+  --oui-gradient-warning-start: 152 58 8;
+  --oui-gradient-warning-end: 255 209 70;
+
+  /* shape — slightly rounded panels, fully round for pills/icons */
+  --oui-rounded: 4px;
+  --oui-rounded-sm: 2px;
+  --oui-rounded-lg: 6px;
+  --oui-rounded-full: 9999px;
+  --oui-button-shadow: none;
+  --oui-font-family: 'Inter', 'Manrope', sans-serif;
+}
+
 * { margin: 0; padding: 0; box-sizing: border-box; }
 
-html { scrollbar-width: none; }
-html.lenis, html.lenis body { height: auto; }
-.lenis.lenis-smooth { scroll-behavior: auto !important; }
-.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+html.lenis, html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+html {
+  scrollbar-width: none;
+}
 
 body {
-  background: var(--s-ink-stage);
-  color: var(--s-ink-90);
-  font-family: var(--s-font-body);
+  background: #06060a;
+  color: #e2e2e2;
+  font-family: 'Inter', sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  line-height: 1.4;
 }
 
 ::-webkit-scrollbar { display: none; }
 
 ::selection {
-  background: var(--s-gold-a40);
-  color: #0a0700;
+  background: rgba(153, 69, 255, 0.4);
+  color: #FFD700;
 }
 
-a { color: inherit; }
-button { font-family: inherit; }
+/* ── Noise overlay ── */
+.noise-bg {
+  position: fixed;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  pointer-events: none;
+  z-index: 1;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-repeat: repeat;
+  background-size: 256px 256px;
+  animation: noiseShift 0.5s steps(1) infinite;
+}
 
-img, svg { display: block; max-width: 100%; }
+@keyframes noiseShift {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-5%, -5%); }
+  50% { transform: translate(5%, 0); }
+  75% { transform: translate(-2%, 5%); }
+  100% { transform: translate(0, 0); }
+}
+
+/* ── Gradient text ── */
+.text-gradient-gold {
+  background: linear-gradient(135deg, #FFD700 0%, #FFA500 40%, #FFD700 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+
+/* ── Glow effects ── */
+.glow-text-gold { text-shadow: 0 0 30px rgba(255,215,0,0.4), 0 0 60px rgba(255,215,0,0.15); }
+
+
+/* ── Buttons ── */
+.btn-primary {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: linear-gradient(135deg, #FFD700 0%, #F0A500 100%);
+  color: #06060a;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  border: none;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  text-decoration: none;
+  text-transform: uppercase;
+  overflow: hidden;
+}
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.35), transparent);
+  transition: left 0.6s ease;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-primary:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 12px 32px rgba(255,215,0,0.3), 0 0 60px rgba(255,215,0,0.1);
+  }
+  .btn-primary:hover::before { left: 100%; }
+}
+.btn-primary:active {
+  transform: scale(0.98);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: rgba(255,215,0,0.04);
+  color: #FFD700;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.5px;
+  border: 1px solid rgba(255,215,0,0.2);
+  border-radius: 2px;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn-secondary:hover {
+    border-color: rgba(255,215,0,0.5);
+    background: rgba(255,215,0,0.08);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(255,215,0,0.1);
+  }
+}
+.btn-secondary:active {
+  background: rgba(255,215,0,0.12);
+}
+
+
+
+/* ── Floating background orbs ── */
+@keyframes float-slow {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
+}
+@keyframes float-slow-reverse {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(-25px, 20px) scale(0.95); }
+  66% { transform: translate(20px, -15px) scale(1.05); }
+}
+.bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  pointer-events: none;
+  will-change: transform;
+}
+.bg-orb-1 { animation: float-slow 20s ease-in-out infinite; }
+.bg-orb-2 { animation: float-slow-reverse 25s ease-in-out infinite; }
+.bg-orb-3 { animation: float-slow 30s ease-in-out infinite; }
+
+/* ── Glow line divider ── */
+@keyframes shimmer-line {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.glow-divider {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,215,0,0.08) 15%, rgba(153,69,255,0.25) 35%, rgba(255,215,0,0.35) 50%, rgba(153,69,255,0.25) 65%, rgba(255,215,0,0.08) 85%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer-line 6s ease-in-out infinite;
+}
+
+
+/* ── Ticker for Hero live prices ── */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-ticker {
+  animation: ticker 30s linear infinite;
+}
+.animate-ticker:hover {
+  animation-play-state: paused;
+}
+
+/* ══════════════════════════════════════════════════
+   SOLINU DEX — Custom Orderly SDK Overrides
+   Gold (#FFD700) / Purple (#9945FF) / Green (#14F195)
+   ══════════════════════════════════════════════════ */
+
+/* ── Top navbar ── */
+[data-testid="oui-scaffold-topNavbar"],
+.oui-scaffold-topNavbar,
+nav[class*="oui-"] {
+  border-bottom: 1px solid rgba(255, 215, 0, 0.08) !important;
+  background: rgba(8, 8, 14, 0.95) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* ── Top nav menu items — better hover & active states ── */
+nav[class*="oui-"] a,
+nav[class*="oui-"] button[class*="nav"],
+[data-testid="oui-scaffold-topNavbar"] a {
+  padding: 6px 12px !important;
+  border-radius: 6px !important;
+  transition: background 0.2s, color 0.2s !important;
+  font-size: 13px !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.3px !important;
+}
+nav[class*="oui-"] a:hover,
+nav[class*="oui-"] button[class*="nav"]:hover,
+[data-testid="oui-scaffold-topNavbar"] a:hover {
+  background: rgba(255, 215, 0, 0.08) !important;
+  color: #FFD700 !important;
+}
+
+/* ── Active nav/tab — gold accent ── */
+[class*="oui-"] [data-state="active"][role="tab"],
+[class*="oui-"] [data-active="true"],
+[class*="oui-"] button[data-state="active"] {
+  color: rgb(255, 215, 0) !important;
+  border-color: rgb(255, 215, 0) !important;
+}
+
+/* ── Gradient brand BUTTONS only (connect wallet) — NOT gradient text ── */
+button.oui-gradient-brand {
+  background: linear-gradient(135deg, rgb(255, 240, 180) 0%, rgb(255, 215, 0) 100%) !important;
+  background-clip: border-box !important;
+  -webkit-background-clip: border-box !important;
+  color: rgb(8, 8, 14) !important;
+  -webkit-text-fill-color: rgb(8, 8, 14) !important;
+}
+button.oui-gradient-brand:hover {
+  box-shadow: 0 4px 20px rgba(255, 215, 0, 0.25);
+  filter: brightness(1.05);
+}
+
+/* ── Primary contained buttons (deposit) — hardcoded gold fallback ── */
+button.oui-bg-primary-darken:not(.oui-bg-transparent):not([class*="oui-bg-transparent"]) {
+  background-color: rgb(218, 175, 0) !important;
+  color: rgb(8, 8, 14) !important;
+}
+
+/* ── Round icon buttons — respect SDK's own rounding ── */
+[class*="oui-"] button[class*="rounded-full"] {
+  border-radius: 9999px !important;
+}
+
+/* ── Sidebar active item — gold accent ── */
+[data-testid*="sidebar"] [data-active="true"],
+[class*="sidebar"] [data-state="active"],
+[class*="leftSidebar"] [data-active="true"] {
+  background: rgba(255, 215, 0, 0.1) !important;
+  border-left: 3px solid #FFD700 !important;
+  color: #FFD700 !important;
+}
+
+/* ── Cards and panels — semi-transparent glass ── */
+[class*="oui-card"],
+[class*="oui-panel"] {
+  backdrop-filter: blur(8px) !important;
+}
+
+/* ── Scaffold body — match dark landing bg ── */
+[data-testid="oui-scaffold-body"],
+[class*="oui-scaffold-body"] {
+  background: rgb(8, 8, 14) !important;
+}
+
+/* ── Tab/segment controls — gold accent ── */
+[class*="oui-"] [role="tablist"] {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.04) !important;
+}
+
+/* ── Margin type selector (Cross/Isolated) — fix clicking + visibility ── */
+[class*="oui-"] [class*="segmented"],
+[class*="oui-"] [class*="Segmented"],
+[class*="oui-"] [role="radiogroup"] {
+  position: relative !important;
+  z-index: 1 !important;
+  pointer-events: auto !important;
+}
+[class*="oui-"] [class*="segmented"] button,
+[class*="oui-"] [class*="Segmented"] button,
+[class*="oui-"] [role="radiogroup"] button,
+[class*="oui-"] [role="radiogroup"] [role="radio"] {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 2 !important;
+  position: relative !important;
+}
+/* Active segment item */
+[class*="oui-"] [class*="segmented"] [data-state="active"],
+[class*="oui-"] [class*="segmented"] [data-state="on"],
+[class*="oui-"] [class*="segmented"] [aria-checked="true"],
+[class*="oui-"] [role="radiogroup"] [data-state="active"],
+[class*="oui-"] [role="radiogroup"] [data-state="on"],
+[class*="oui-"] [role="radiogroup"] [aria-checked="true"] {
+  background: rgba(255, 215, 0, 0.12) !important;
+  color: rgb(255, 215, 0) !important;
+  font-weight: 600 !important;
+}
+
+/* ── Leverage selector popup/select ── */
+[class*="oui-"] [class*="leverage"] button,
+[class*="oui-"] button[class*="leverage"] {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* ── Order type tabs (Limit/Market/Advanced) ── */
+.solinu-trading-section [role="tablist"] button[role="tab"] {
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* ── Separator lines — subtle ── */
+[class*="oui-"] [class*="separator"],
+[class*="oui-"] [class*="divider"],
+[class*="oui-"] hr {
+  border-color: rgba(255, 255, 255, 0.04) !important;
+  opacity: 1 !important;
+}
+
+/* ── Leaderboard top 3 — gold highlights (scoped to Orderly) ── */
+[class*="oui-"] tr:nth-child(1) [class*="rank"] {
+  color: #FFD700 !important;
+}
+[class*="oui-"] tr:nth-child(2) [class*="rank"] {
+  color: #C0C0C0 !important;
+}
+[class*="oui-"] tr:nth-child(3) [class*="rank"] {
+  color: #CD7F32 !important;
+}
+
+/* ── Bottom positions/orders panel — stretch full width ── */
+.solinu-trading-section [data-testid*="positions"],
+.solinu-trading-section [data-testid*="orders"],
+.solinu-trading-section [data-testid*="dataList"] {
+  width: 100% !important;
+  max-width: 100% !important;
+}
+
+/* ── Footer — subtle border ── */
+[data-testid="oui-scaffold-footer"],
+footer[class*="oui-"] {
+  border-top: 1px solid rgba(255, 215, 0, 0.06) !important;
+  background: rgba(8, 8, 14, 0.9) !important;
+}
+
+/* ── Mobile bottom tab bar (Orderly Scaffold) — equal columns, aligned icon + label ── */
+@media (max-width: 1023px) {
+  footer.solinu-mobile-bottom-nav {
+    padding-left: max(4px, env(safe-area-inset-left, 0px));
+    padding-right: max(4px, env(safe-area-inset-right, 0px));
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  footer.solinu-mobile-bottom-nav > div[class*="oui-flex"] {
+    width: 100% !important;
+    align-items: stretch !important;
+    justify-content: space-between !important;
+    gap: 0 !important;
+  }
+  footer.solinu-mobile-bottom-nav > div[class*="oui-flex"] > a,
+  footer.solinu-mobile-bottom-nav > div[class*="oui-flex"] > button {
+    flex: 1 1 0 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    row-gap: 4px !important;
+    padding-top: 6px !important;
+    padding-bottom: 6px !important;
+    box-sizing: border-box !important;
+  }
+  footer.solinu-mobile-bottom-nav [class*="oui-text-2xs"],
+  footer.solinu-mobile-bottom-nav [class*="oui-text-xs"],
+  footer.solinu-mobile-bottom-nav [class*="oui-leading"] {
+    max-width: 100% !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.1 !important;
+  }
+}
+
+/* ── Scrollbar for DEX pages ── */
+.oui-scroll::-webkit-scrollbar,
+[class*="oui-"] ::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+.oui-scroll::-webkit-scrollbar-track,
+[class*="oui-"] ::-webkit-scrollbar-track {
+  background: transparent;
+}
+.oui-scroll::-webkit-scrollbar-thumb,
+[class*="oui-"] ::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.15);
+  border-radius: 4px;
+}
+.oui-scroll::-webkit-scrollbar-thumb:hover,
+[class*="oui-"] ::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.3);
+}
+
+/* ── Dark themed scrollbars (Copy Trade leaderboard, tabs, etc.) — overrides global ::-webkit-scrollbar hide ── */
+.solinu-dark-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255, 215, 0, 0.35) rgba(255, 255, 255, 0.05);
+}
+.solinu-dark-scroll::-webkit-scrollbar {
+  display: block;
+  width: 8px;
+  height: 8px;
+}
+.solinu-dark-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 6px;
+}
+.solinu-dark-scroll::-webkit-scrollbar-thumb {
+  background: rgba(255, 215, 0, 0.28);
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+.solinu-dark-scroll::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 215, 0, 0.45);
+  background-clip: padding-box;
+}
+.solinu-dark-scroll::-webkit-scrollbar-corner {
+  background: rgba(8, 8, 12, 0.95);
+}
+
+/* ── Input focus — no double ring (SDK + our old rules stacked border + box-shadow) ── */
+html[data-oui-theme="solinu"] [class*="oui-"] input:focus,
+html[data-oui-theme="solinu"] [class*="oui-"] input:focus-visible,
+[class*="oui-"] input:focus,
+[class*="oui-"] input:focus-visible,
+[class*="oui-"] textarea:focus,
+[class*="oui-"] textarea:focus-visible,
+[class*="oui-"] select:focus,
+[class*="oui-"] select:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  --tw-ring-offset-shadow: 0 0 #0000 !important;
+}
+
+/* Single subtle border on the field shell — not on the inner input (avoids misaligned “crooked” glow) */
+[class*="oui-"] [class*="oui-border"]:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  border-color: rgba(255, 215, 0, 0.22) !important;
+}
+
+/* Modals / deposit: same treatment when shell has border + input */
+[role="dialog"] [class*="oui-"] [class*="oui-border"]:focus-within,
+[class*="oui-deposit"] [class*="oui-border"]:focus-within,
+[class*="oui-withdraw"] [class*="oui-border"]:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+  border-color: rgba(255, 215, 0, 0.22) !important;
+}
+
+/* ── Tooltip styling (scoped to Orderly) ── */
+[class*="oui-"] [role="tooltip"],
+[class*="oui-tooltip"] {
+  border: 1px solid rgba(255, 215, 0, 0.1) !important;
+  background: rgba(16, 14, 26, 0.95) !important;
+}
+
+/* ── Dropdown menus (scoped to Orderly) ── */
+[class*="oui-"] [role="menu"],
+[class*="oui-dropdown"] {
+  border: 1px solid rgba(255, 215, 0, 0.08) !important;
+  background: rgba(12, 11, 20, 0.98) !important;
+  backdrop-filter: blur(12px) !important;
+}
+
+/* ── Table header (scoped to Orderly) ── */
+[class*="oui-"] thead th {
+  color: rgba(255, 215, 0, 0.6) !important;
+  font-weight: 600 !important;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.08) !important;
+}
+
+/* ── Powered by Orderly — subtle ── */
+[class*="powered"],
+[class*="Powered"] {
+  opacity: 0.5;
+}
+
+/* ── Order book — better readability ── */
+[class*="oui-"] [class*="asks"] [class*="bg"],
+[class*="oui-"] [class*="bids"] [class*="bg"] {
+  opacity: 0.12 !important;
+}
+
+/* ── Dialog/Modal styling ── */
+[class*="oui-"] [role="dialog"]:not([class*="oui-bg-transparent"]),
+[class*="oui-"] [class*="dialog-content"]:not([class*="oui-bg-transparent"]),
+[class*="oui-"] [class*="DialogContent"]:not([class*="oui-bg-transparent"]),
+[class*="oui-"] [class*="sheet-content"]:not([class*="oui-bg-transparent"]) {
+  border: 1px solid rgba(255, 215, 0, 0.08) !important;
+  background: rgba(12, 11, 20, 0.98) !important;
+  backdrop-filter: blur(16px) !important;
+  border-radius: 6px !important;
+}
+
+/* ── Switch/Toggle — gold when ON, dark when OFF ── */
+[class*="oui-"] [role="switch"][data-state="checked"],
+[class*="oui-"] [class*="switch"][data-state="checked"],
+[class*="oui-"] button[role="switch"][data-state="checked"] {
+  background: #FFD700 !important;
+  border-color: #FFD700 !important;
+}
+[class*="oui-"] [role="switch"][data-state="checked"] > span,
+[class*="oui-"] button[role="switch"][data-state="checked"] > span {
+  background: #0c0b14 !important;
+}
+/* Toggle OFF state — subtle dark with visible knob */
+[class*="oui-"] [role="switch"][data-state="unchecked"],
+[class*="oui-"] [class*="switch"][data-state="unchecked"],
+[class*="oui-"] button[role="switch"][data-state="unchecked"] {
+  background: rgba(255, 255, 255, 0.06) !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+[class*="oui-"] [role="switch"][data-state="unchecked"] > span,
+[class*="oui-"] button[role="switch"][data-state="unchecked"] > span {
+  background: rgba(255, 255, 255, 0.4) !important;
+}
+
+/* ── Checkbox — gold when checked ── */
+[class*="oui-"] [role="checkbox"][data-state="checked"],
+[class*="oui-"] [class*="checkbox"][data-state="checked"] {
+  background: #FFD700 !important;
+  border-color: #FFD700 !important;
+}
+
+/* ── Select/dropdown trigger — refined ── */
+[class*="oui-"] [class*="select-trigger"],
+[class*="oui-"] [class*="SelectTrigger"] {
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  background: rgba(16, 14, 28, 0.6) !important;
+}
+[class*="oui-"] [class*="select-trigger"]:hover,
+[class*="oui-"] [class*="SelectTrigger"]:hover {
+  border-color: rgba(255, 215, 0, 0.15) !important;
+}
+
+/* ── Badge/tag styling ── */
+[class*="oui-"] [class*="badge"],
+[class*="oui-"] [class*="Badge"] {
+  border-radius: 2px !important;
+}
+
+/* ── Slider (leverage etc.) — gold ── */
+[class*="oui-"] [role="slider"] {
+  background: #FFD700 !important;
+  border: 2px solid rgba(255, 215, 0, 0.5) !important;
+}
+[class*="oui-"] [class*="slider"] [class*="track"] {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+[class*="oui-"] [class*="slider"] [class*="range"] {
+  background: linear-gradient(90deg, #FFD700, #F0A500) !important;
+}
+
+/* ── Buy/Sell buttons in order form — proper trading colors ── */
+.solinu-trading-section button[class*="oui-bg-success"],
+.solinu-trading-section button[class*="oui-bg-trading-profit"],
+[class*="oui-"] button[class*="buy"][class*="oui-bg-success"] {
+  background: linear-gradient(135deg, #0ECB81, #0BA360) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+}
+.solinu-trading-section button[class*="oui-bg-danger"],
+.solinu-trading-section button[class*="oui-bg-trading-loss"],
+[class*="oui-"] button[class*="sell"][class*="oui-bg-danger"] {
+  background: linear-gradient(135deg, #F6465D, #D4374E) !important;
+  color: #fff !important;
+  font-weight: 700 !important;
+}
+
+/* ── Positive/negative text — forced green/red ── */
+.oui-text-trade-profit {
+  color: rgb(14, 203, 129) !important;
+}
+.oui-text-trade-loss {
+  color: rgb(246, 70, 93) !important;
+}
+/* Fix: mix-blend-luminosity desaturates PnL colors in top-ranked leaderboard rows */
+.oui-mix-blend-luminosity:has(.oui-text-trade-profit),
+.oui-mix-blend-luminosity:has(.oui-text-trade-loss) {
+  mix-blend-mode: normal !important;
+}
+[class*="oui-text-success"],
+[class*="oui-text-profit"] {
+  text-shadow: 0 0 8px rgba(14, 203, 129, 0.2);
+}
+[class*="oui-text-danger"],
+[class*="oui-text-loss"] {
+  text-shadow: 0 0 8px rgba(246, 70, 93, 0.2);
+}
+
+/* ══════════════════════════════════════════════════
+   2K / 4K Monitor Scaling
+   ══════════════════════════════════════════════════ */
+
+/* ── 2K (1920px+) ── */
+@media (min-width: 1920px) {
+  .hero-ticker .flex > div {
+    padding-left: 2rem;
+    padding-right: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
+  .hero-ticker .flex > div span {
+    font-size: 14px;
+  }
+  .btn-primary, .btn-secondary {
+    font-size: 14px !important;
+    padding: 14px 32px !important;
+    letter-spacing: 1.5px !important;
+  }
+  .glow-divider {
+    height: 2px;
+  }
+  .bg-orb {
+    transform: scale(1.5);
+  }
+}
+
+/* ── SOLINU: TradingView chart styling ── */
+.solinu-trading-section iframe {
+  border: none !important;
+}
+
+/* ══════════════════════════════════════════════════
+   Order Form Input Fixes — rounded, polished inputs
+   ══════════════════════════════════════════════════ */
+
+/* Round all SDK input wrappers in the trading section */
+.solinu-trading-section [class*="oui-input"],
+.solinu-trading-section [class*="oui-Input"],
+.solinu-trading-section [data-testid*="input"],
+.solinu-trading-section [class*="oui-bg-base-7"],
+.solinu-trading-section [class*="oui-bg-base-8"] {
+  border-radius: 6px !important;
+}
+
+/* Soften borders on input containers */
+.solinu-trading-section [class*="oui-border"][class*="oui-rounded"],
+.solinu-trading-section [class*="oui-border-line"][class*="oui-bg-base"] {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+  border-radius: 6px !important;
+}
+
+/* Focus: one border tint only (see global :focus-within rules above) */
+.solinu-trading-section [class*="oui-border"]:focus-within {
+  outline: none !important;
+  box-shadow: none !important;
+  border-color: rgba(255, 215, 0, 0.22) !important;
+}
+
+/* Clean actual input elements — no second ring */
+.solinu-trading-section input[type="text"],
+.solinu-trading-section input[type="number"],
+.solinu-trading-section input[class*="oui-"] {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+.solinu-trading-section input[type="text"]:focus,
+.solinu-trading-section input[type="text"]:focus-visible,
+.solinu-trading-section input[type="number"]:focus,
+.solinu-trading-section input[type="number"]:focus-visible {
+  box-shadow: none !important;
+  --tw-ring-shadow: 0 0 #0000 !important;
+}
+
+/* Fix nested double-border boxes */
+.solinu-trading-section [class*="oui-bg-base"][class*="oui-border"] [class*="oui-bg-base"] {
+  background: transparent !important;
+  border: none !important;
+}
+
+/* Modals & dialogs — also round inputs */
+[class*="oui-dialog"] [class*="oui-input"],
+[class*="oui-dialog"] [class*="oui-bg-base-7"],
+[class*="oui-modal"] [class*="oui-input"],
+[class*="oui-modal"] [class*="oui-bg-base-7"] {
+  border-radius: 6px !important;
+}
+
+/* Round all SDK buttons in order panel */
+.solinu-trading-section button[class*="oui-bg-"] {
+  border-radius: 6px !important;
+}
+
+/* ══════════════════════════════════════════════════
+   Radio Buttons — clean styling (only actual <input> radios)
+   ══════════════════════════════════════════════════ */
+
+[class*="oui-"] input[type="radio"] {
+  appearance: none !important;
+  -webkit-appearance: none !important;
+  width: 14px !important;
+  height: 14px !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 50% !important;
+  background: transparent !important;
+  transition: all 0.15s ease !important;
+  cursor: pointer !important;
+}
+[class*="oui-"] input[type="radio"]:checked {
+  border-color: rgb(var(--oui-color-primary, 255, 215, 0)) !important;
+  background: rgb(var(--oui-color-primary, 255, 215, 0)) !important;
+  box-shadow: inset 0 0 0 2.5px rgb(var(--oui-color-base-9, 12, 11, 20)) !important;
+}
+
+/* ══════════════════════════════════════════════════
+   Checkbox unchecked — subtle border, no ugly white
+   ══════════════════════════════════════════════════ */
+
+[class*="oui-"] [role="checkbox"][data-state="unchecked"],
+[class*="oui-"] [class*="checkbox"][data-state="unchecked"],
+[class*="oui-"] button[role="checkbox"][data-state="unchecked"] {
+  background: transparent !important;
+  border: 1.5px solid rgba(255, 255, 255, 0.15) !important;
+  border-radius: 3px !important;
+}
+[class*="oui-"] [role="checkbox"][data-state="unchecked"]:hover,
+[class*="oui-"] button[role="checkbox"][data-state="unchecked"]:hover {
+  border-color: rgba(255, 215, 0, 0.3) !important;
+}
+
+/* Checkbox checked — gold with dark check icon */
+[class*="oui-"] [role="checkbox"][data-state="checked"] svg,
+[class*="oui-"] [class*="checkbox"][data-state="checked"] svg {
+  color: rgb(var(--oui-color-base-10, 8, 8, 14)) !important;
+}
+
+/* ══════════════════════════════════════════════════
+   Toggle/Switch refinements
+   ══════════════════════════════════════════════════ */
+
+/* Reduce size slightly and soften colors */
+[class*="oui-"] [role="switch"] {
+  border-radius: 9999px !important;
+  transition: background 0.2s ease, border-color 0.2s ease !important;
+}
+
+/* ══════════════════════════════════════════════════
+   Custom Modals & Dialogs — polished look
+   ══════════════════════════════════════════════════ */
+
+/* Dialog/modal backdrop */
+[class*="oui-dialog-overlay"],
+[class*="oui-modal-overlay"],
+[data-radix-dialog-overlay] {
+  background: rgba(0, 0, 0, 0.7) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Dialog/modal container */
+[class*="oui-dialog-content"]:not([class*="oui-bg-transparent"]),
+[class*="oui-modal-content"]:not([class*="oui-bg-transparent"]),
+[role="dialog"][class*="oui-"]:not([class*="oui-bg-transparent"]) {
+  border-radius: 12px !important;
+  border: 1px solid rgba(255, 255, 255, 0.08) !important;
+  background: rgb(var(--oui-color-base-9, 12, 11, 20)) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.04) !important;
+}
+
+/* Wallet connect modal specific */
+[class*="oui-wallet-connector"],
+[class*="wallet-connector"],
+[data-testid*="wallet"] [role="dialog"] {
+  border-radius: 12px !important;
+}
+
+/* Wallet connect buttons */
+[class*="oui-wallet-connector"] button,
+[class*="wallet-connector"] button[class*="oui-"] {
+  border-radius: 8px !important;
+  transition: all 0.15s ease !important;
+}
+[class*="oui-wallet-connector"] button:hover,
+[class*="wallet-connector"] button[class*="oui-"]:hover {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+/* Dialog close button */
+[class*="oui-dialog"] button[class*="close"],
+[role="dialog"] button[aria-label="Close"] {
+  border-radius: 8px !important;
+  transition: background 0.15s ease !important;
+}
+[role="dialog"] button[aria-label="Close"]:hover {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* TP/SL dialog inputs */
+[role="dialog"] [class*="oui-input"],
+[role="dialog"] [class*="oui-bg-base-7"],
+[role="dialog"] input[class*="oui-"] {
+  border-radius: 6px !important;
+}
+
+/* Deposit/Withdraw modal */
+[class*="oui-deposit"] [class*="oui-rounded"],
+[class*="oui-withdraw"] [class*="oui-rounded"] {
+  border-radius: 8px !important;
+}
+
+/* Select dropdowns in modals */
+[role="dialog"] [class*="oui-select"],
+[role="dialog"] [role="listbox"] {
+  border-radius: 8px !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* ══════════════════════════════════════════════════
+   Thirdweb Wallet Modal — dark/gold theme override
+   ══════════════════════════════════════════════════ */
+
+/* Modal backdrop */
+[data-is-tw-connected-wallet] ~ div[class*="overlay"],
+div[id*="headlessui-dialog"] > div:first-child {
+  background: rgba(0, 0, 0, 0.75) !important;
+  backdrop-filter: blur(4px) !important;
+}
+
+/* Modal card container — dark theme */
+[data-is-tw-connected-wallet],
+div[class*="tw-connected-wallet"],
+div[aria-label*="Connect"] > div,
+div[class*="walletconnect"],
+div[role="dialog"][class*="fixed"] > div[class*="bg-"] {
+  background: #0e0d18 !important;
+  border: 1px solid rgba(255, 215, 0, 0.1) !important;
+  border-radius: 16px !important;
+  color: #fff !important;
+}
+
+/* Thirdweb modal inner card */
+div[class*="tw-"] div[class*="ModalContainer"],
+div[class*="tw-"] div[class*="modal"],
+div[class*="thirdweb"] > div {
+  background: #0e0d18 !important;
+  border: 1px solid rgba(255, 215, 0, 0.1) !important;
+  border-radius: 16px !important;
+}
+
+/* Thirdweb text */
+div[class*="tw-"] h2,
+div[class*="tw-"] p,
+div[class*="tw-"] span,
+div[class*="tw-"] label,
+div[class*="thirdweb"] h2,
+div[class*="thirdweb"] p {
+  color: #fff !important;
+}
+
+/* Thirdweb wallet option buttons */
+div[class*="tw-"] button[class*="wallet"],
+div[class*="tw-"] div[role="button"],
+div[class*="thirdweb"] button {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border: 1px solid rgba(255, 255, 255, 0.06) !important;
+  border-radius: 10px !important;
+  color: #fff !important;
+  transition: all 0.15s ease !important;
+}
+div[class*="tw-"] button[class*="wallet"]:hover,
+div[class*="tw-"] div[role="button"]:hover,
+div[class*="thirdweb"] button:hover {
+  background: rgba(255, 215, 0, 0.08) !important;
+  border-color: rgba(255, 215, 0, 0.2) !important;
+}
+
+/* Thirdweb powered-by footer */
+div[class*="tw-"] [class*="powered"],
+div[class*="thirdweb"] [class*="powered"] {
+  opacity: 0.3 !important;
+}
+
+/* ══════════════════════════════════════════════════
+   Performance — GPU hints for ticker only
+   ══════════════════════════════════════════════════ */
+
+/* GPU-layer the scrolling ticker strip only */
+[data-testid*="market-ticker"],
+[data-testid*="marquee"] {
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+
+/* ── 4K (2560px+) ── */
+@media (min-width: 2560px) {
+  .hero-ticker .flex > div {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-top: 1.25rem;
+    padding-bottom: 1.25rem;
+  }
+  .hero-ticker .flex > div span {
+    font-size: 16px;
+  }
+  .btn-primary, .btn-secondary {
+    font-size: 16px !important;
+    padding: 18px 40px !important;
+    letter-spacing: 2px !important;
+  }
+  .glow-divider {
+    height: 3px;
+  }
+  .bg-orb {
+    transform: scale(2.2);
+  }
+}
+
+/* CopyTrade: remove native number spinner white controls on dark inputs */
+.copytrade-page input[type="number"] {
+  -moz-appearance: textfield;
+  appearance: textfield;
+}
+.copytrade-page input[type="number"]::-webkit-outer-spin-button,
+.copytrade-page input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+

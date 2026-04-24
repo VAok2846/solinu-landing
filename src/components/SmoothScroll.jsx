@@ -1,43 +1,44 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import Lenis from 'lenis'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
 
 function shouldUseLenis() {
   if (typeof window === 'undefined') return false
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return false
+  // Lenis + touch / narrow viewports is a common source of iOS Safari glitches;
+  // native scrolling keeps the landing page stable on phones.
   if (window.matchMedia('(max-width: 1023px)').matches) return false
   if (window.matchMedia('(pointer: coarse)').matches) return false
   return true
 }
 
-export default function SmoothScroll() {
+export default function SmoothScroll({ children }) {
+  const lenisRef = useRef(null)
+
   useEffect(() => {
     if (!shouldUseLenis()) return undefined
 
     const lenis = new Lenis({
-      duration: 1.15,
+      duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: 'vertical',
+      gestureOrientation: 'vertical',
       smoothWheel: true,
-      smoothTouch: false,
+      wheelMultiplier: 1,
       touchMultiplier: 2,
     })
+    lenisRef.current = lenis
 
-    const onScroll = () => ScrollTrigger.update()
-    lenis.on('scroll', onScroll)
-
-    const tickerCb = (time) => lenis.raf(time * 1000)
-    gsap.ticker.add(tickerCb)
-    gsap.ticker.lagSmoothing(0)
+    function raf(time) {
+      lenis.raf(time)
+      requestAnimationFrame(raf)
+    }
+    requestAnimationFrame(raf)
 
     return () => {
-      lenis.off('scroll', onScroll)
-      gsap.ticker.remove(tickerCb)
       lenis.destroy()
+      lenisRef.current = null
     }
   }, [])
 
-  return null
+  return children
 }
