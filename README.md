@@ -1,18 +1,17 @@
-# Solinu Landing (current production snapshot)
+# Solinu Landing
 
-Landing page for **SOLINU Exchange** — a Solana-native perpetual futures exchange with built-in copy-trading of top perp leaders. Self-custody: the user's wallet signs every order.
+Landing page for **Solinu Exchange** — a Solana-native perpetual futures exchange with built-in copy-trading of top perp leaders. Self-custody: the user's wallet signs every order.
 
-This repo is a **standalone extract** of the current production landing, bundled for design iteration in tools like [v0.dev](https://v0.dev) or Framer. No backend, no wallet SDKs, no trading logic — pure marketing frontend.
+This repo is a **standalone extract** of the landing, bundled for design iteration. Inspired by the structure of top perp-DEX landings (variational.io, lighter.xyz, paradex.trade, extended.exchange) and the LanX Framer template (progressive blur, scroll reveals, inline-style Framer patterns).
 
 ## Stack
 
 - React 18 + Vite 5
-- React Router 6 (single-page)
-- Tailwind CSS 3
-- GSAP 3 + ScrollTrigger (scroll-driven reveals)
-- Framer Motion (nav, FAQ, Markets animations)
-- Lenis (smooth scroll)
-- Lucide React (icons)
+- React Router 6
+- **Framer Motion** (scroll-driven reveals + micro-interactions)
+- **Lucide React** (icons)
+- Inter font via Google Fonts
+- Inline CSS + CSS custom properties (no Tailwind, no shadcn — Framer-style)
 
 ## Run
 
@@ -25,38 +24,48 @@ npm run dev
 
 ```
 src/
-  pages/Landing.jsx                # Page root — composes sections top to bottom
+  pages/Landing.jsx                # Composes sections top-to-bottom
   App.jsx                          # Router
   main.jsx                         # Entry
-  index.css                        # Tailwind directives + custom utility classes
+  index.css                        # Global reset + body defaults
+  design/
+    tokens.css                     # CSS variables — colors, spacing, type, motion
+    copy.js                        # All user-facing strings
+    format.js                      # Intl helpers
   components/
-    Navbar.jsx                     # Fixed top nav with mobile drawer
-    Hero.jsx                       # Hero with live Binance price ticker
-    HeroBg.jsx                     # Hero background visuals
-    Infrastructure.jsx             # Infrastructure / stack feature section
-    Markets.jsx                    # Markets showcase
-    Security.jsx                   # Security / self-custody story
-    TokenEarn.jsx                  # $SOLINU token section
-    FAQ.jsx                        # FAQ accordion
-    CTA.jsx                        # Primary CTA section
-    Footer.jsx                     # Footer with social links
-    SectionBg.jsx                  # Decorative section backgrounds
-    SmoothScroll.jsx               # Lenis + GSAP ScrollTrigger bridge
-  lib/solinuToken.js               # $SOLINU SPL mint address constants
+    Nav.jsx                        # Fixed top nav with scroll-blur background
+    Hero.jsx                       # Eyebrow pill + headline + sub + dual CTA + live stats
+    Integrations.jsx               # Ecosystem strip (Solana / Privy / Phantom / Backpack / Solflare)
+    Features.jsx                   # 4 product cards with gold glow on hover
+    HowItWorks.jsx                 # 4-step flow (Connect → Fund → Trade → Settle)
+    Leaders.jsx                    # Curated leader table with sparklines
+    FAQ.jsx                        # Collapsible Q&A
+    Closing.jsx                    # Final CTA section
+    Footer.jsx                     # Brand + 3 link columns + copyright
+    Sparkline.jsx                  # SVG mini-chart primitive
+    Reveal.jsx                     # framer-motion scroll-reveal wrapper
+    ProgressiveBlur.jsx            # 8-layer tiered glass blur (LanX technique)
 ```
 
-## Brand tokens (in `tailwind.config.js`)
+## Brand tokens (in `design/tokens.css`)
 
-- `dark` `#06060a` — page background
-- `dark-card` `#0c0c14` — raised panel
-- `gold` `#FFD700` — brand accent
-- `purple` `#9945FF`, `cyan` `#14F195`, `red` `#FF3B6B` — secondary accents
-- Fonts: Space Grotesk (heading), Inter (body), JetBrains Mono (numerics)
+- Bg: `#06060c`
+- Ink 100 → 03 (white opacity scale)
+- Gold 100 → 800 (#FFF7D1 → #8A6400, brand accent)
+- P/L: `#0ECB81` up · `#F6465D` down
+
+## Hero live numbers
+
+Hero fetches `https://api-evm.orderly.network/v1/public/futures` and computes Markets count, 24h volume sum, open interest. Baseline fallback when offline.
+
+## Leaders data
+
+Currently stubbed with 4 mock rows (KEVALDO + 3 generic). Re-wire to a real `/api/copy/traders/featured` endpoint when re-integrating with the backend.
 
 ## Socials
 
-- X / Twitter: [@SolinuExchange](https://x.com/SolinuExchange)
-- Telegram: [@SolinuExchange](https://t.me/SolinuExchange)
+- X:        https://x.com/SolinuExchange
+- Telegram: https://t.me/SolinuExchange
 
 ## License
 
