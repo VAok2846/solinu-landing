@@ -1,0 +1,33 @@
+{
+  "name": "SOLINU Exchange",
+  "short_name": "SOLINU",
+  "description": "Decentralized perpetual trading on Solana. 40+ markets, up to 100x leverage, full self-custody.",
+  "scope": "/",
+  "start_url": "/trade",
+  "display": "standalone",
+  "orientation": "any",
+  "theme_color": "#06060a",
+  "background_color": "#06060a",
+  "lang": "en",
+  "categories": ["finance", "crypto"],
+  "icons": [
+    {
+      "src": "/solinu-logo.jpg",
+      "sizes": "400x400",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/solinu-logo.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/solinu-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable"
+    }
+  ]
+}

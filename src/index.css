@@ -1,0 +1,28 @@
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scrollbar-width: none; }
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+
+body {
+  background: var(--s-ink-stage);
+  color: var(--s-ink-90);
+  font-family: var(--s-font-body);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.4;
+}
+
+::-webkit-scrollbar { display: none; }
+
+::selection {
+  background: var(--s-gold-a40);
+  color: #0a0700;
+}
+
+a { color: inherit; }
+button { font-family: inherit; }
+
+img, svg { display: block; max-width: 100%; }
