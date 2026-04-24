@@ -83,8 +83,8 @@ export default function TokenEarn() {
           <div className="w-8 h-px bg-gradient-to-r from-gold/40 to-transparent" />
           <span className="text-[10px] 3xl:text-[12px] 4xl:text-[14px] text-gold/80 font-mono uppercase tracking-[0.25em]">Token</span>
         </div>
-        <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl 4xl:text-7xl text-white tracking-tight mb-3 3xl:mb-5">
-          The <span className="text-gradient-gold glow-text-gold">$SOLINU</span> token
+        <h2 className="font-heading font-semibold text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl 4xl:text-7xl text-white tracking-tight mb-3 3xl:mb-5">
+          The <span className="text-gradient-gold">$SOLINU</span> token
         </h2>
         <p className="text-white/50 text-sm 3xl:text-base 4xl:text-lg max-w-xl 3xl:max-w-2xl leading-relaxed">
           Community fair launch on Solana. 20% airdropped to 10,000 wallets.

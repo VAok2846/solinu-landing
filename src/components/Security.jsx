@@ -45,7 +45,7 @@ export default function Security() {
           <div className="w-8 h-px bg-gradient-to-r from-[#14F195]/40 to-transparent" />
           <span className="text-[10px] 3xl:text-[12px] 4xl:text-[14px] text-[#14F195]/80 font-mono uppercase tracking-[0.25em]">Security</span>
         </div>
-        <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl 4xl:text-7xl text-white tracking-tight mb-3 3xl:mb-5">
+        <h2 className="font-heading font-semibold text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl 4xl:text-7xl text-white tracking-tight mb-3 3xl:mb-5">
           Your keys. <span className="text-[#14F195]">Your funds.</span>
         </h2>
         <p className="text-white/50 text-sm 3xl:text-base 4xl:text-lg max-w-lg 3xl:max-w-xl leading-relaxed">

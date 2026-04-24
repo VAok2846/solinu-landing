@@ -62,7 +62,7 @@ export default function FAQ() {
             <div className="w-8 h-px bg-gradient-to-r from-white/20 to-transparent" />
             <span className="text-[10px] 3xl:text-[12px] 4xl:text-[14px] text-white/50 font-mono uppercase tracking-[0.25em]">FAQ</span>
           </div>
-          <h2 className="font-heading font-bold text-3xl sm:text-4xl 3xl:text-5xl 4xl:text-6xl text-white tracking-tight mb-2 3xl:mb-4">
+          <h2 className="font-heading font-semibold text-3xl sm:text-4xl 3xl:text-5xl 4xl:text-6xl text-white tracking-tight mb-2 3xl:mb-4">
             Common questions
           </h2>
           <p className="text-white/50 text-sm 3xl:text-base 4xl:text-lg">

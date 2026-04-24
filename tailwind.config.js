@@ -27,9 +27,10 @@ export default {
         'dark-border': '#1c1c30',
       },
       fontFamily: {
-        heading: ['"Space Grotesk"', 'sans-serif'],
-        body: ['"Inter"', 'sans-serif'],
-        mono: ['"JetBrains Mono"', 'monospace'],
+        sans: ['"Geist"', 'system-ui', 'sans-serif'],
+        heading: ['"Geist"', 'system-ui', 'sans-serif'],
+        body: ['"Geist"', 'system-ui', 'sans-serif'],
+        mono: ['"Geist Mono"', '"JetBrains Mono"', 'monospace'],
       },
       animation: {
         'float': 'float 6s ease-in-out infinite',

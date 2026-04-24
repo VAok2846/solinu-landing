@@ -74,7 +74,7 @@ export default function Infrastructure() {
           <div className="w-8 h-px bg-gradient-to-r from-purple/40 to-transparent" />
           <span className="text-[10px] 3xl:text-[12px] 4xl:text-[14px] text-purple/70 font-mono uppercase tracking-[0.25em]">Infrastructure</span>
         </div>
-        <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl 4xl:text-7xl text-white tracking-tight mb-3 3xl:mb-5">
+        <h2 className="font-heading font-semibold text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl 4xl:text-7xl text-white tracking-tight mb-3 3xl:mb-5">
           Built on proven protocols
         </h2>
         <p className="text-white/50 text-sm sm:text-base 3xl:text-lg 4xl:text-xl max-w-xl 3xl:max-w-2xl leading-relaxed">

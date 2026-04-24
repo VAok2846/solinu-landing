@@ -119,8 +119,8 @@ export default function Markets() {
         </div>
         <div className="flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
           <div>
-            <h2 className="font-heading font-bold text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl 4xl:text-7xl text-white tracking-tight mb-2 3xl:mb-4">
-              40+ perpetual markets
+            <h2 className="font-heading font-semibold text-3xl sm:text-4xl lg:text-5xl 3xl:text-6xl 4xl:text-7xl text-white tracking-tight mb-2 3xl:mb-4">
+              90+ perpetual markets
             </h2>
             <p className="text-white/50 text-sm 3xl:text-base 4xl:text-lg max-w-md 3xl:max-w-lg">
               Shared liquidity from 30+ DEXes via Orderly Network. Live prices, tight spreads.

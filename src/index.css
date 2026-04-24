@@ -107,7 +107,7 @@ html {
 body {
   background: #06060a;
   color: #e2e2e2;
-  font-family: 'Inter', sans-serif;
+  font-family: 'Geist', 'Inter', system-ui, sans-serif;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -166,10 +166,10 @@ body {
   padding: 14px 32px;
   background: linear-gradient(135deg, #FFD700 0%, #F0A500 100%);
   color: #06060a;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 700;
+  font-family: 'Geist', system-ui, sans-serif;
+  font-weight: 600;
   font-size: 13px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   border: none;
   border-radius: 2px;
   cursor: pointer;
@@ -205,10 +205,10 @@ body {
   padding: 14px 32px;
   background: rgba(255,215,0,0.04);
   color: #FFD700;
-  font-family: 'Space Grotesk', sans-serif;
-  font-weight: 600;
+  font-family: 'Geist', system-ui, sans-serif;
+  font-weight: 500;
   font-size: 13px;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
   border: 1px solid rgba(255,215,0,0.2);
   border-radius: 2px;
   cursor: pointer;
