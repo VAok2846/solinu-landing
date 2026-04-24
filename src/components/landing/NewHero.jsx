@@ -38,77 +38,29 @@ function useSnapshot() {
   return snap
 }
 
-// Signature SVG pattern: floating crosshairs that drift slowly
-function SignaturePattern() {
+// Variational-style decorative plus-marker at fixed offsets from hero corners.
+function PlusMark({ pos = 'tl' }) {
+  const POS = {
+    tl: { top:  'clamp(92px, 11vw, 140px)', left:  'clamp(20px, 3vw, 48px)' },
+    tr: { top:  'clamp(92px, 11vw, 140px)', right: 'clamp(20px, 3vw, 48px)' },
+    bl: { bottom: 'clamp(72px, 8vw, 110px)', left: 'clamp(20px, 3vw, 48px)' },
+    br: { bottom: 'clamp(72px, 8vw, 110px)', right: 'clamp(20px, 3vw, 48px)' },
+  }
   return (
-    <svg
+    <span
       aria-hidden
-      className="h-pattern"
       style={{
         position: 'absolute',
-        inset: 0,
-        width: '100%',
-        height: '100%',
+        ...POS[pos],
+        width: 12,
+        height: 12,
         pointerEvents: 'none',
-        overflow: 'visible',
+        opacity: 0.5,
       }}
     >
-      <defs>
-        <linearGradient id="gold-fade-v" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="var(--s-gold-500)" stopOpacity="0" />
-          <stop offset="50%" stopColor="var(--s-gold-500)" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="var(--s-gold-500)" stopOpacity="0" />
-        </linearGradient>
-        <linearGradient id="gold-fade-h" x1="0" y1="0" x2="1" y2="0">
-          <stop offset="0%" stopColor="var(--s-gold-500)" stopOpacity="0" />
-          <stop offset="50%" stopColor="var(--s-gold-500)" stopOpacity="0.35" />
-          <stop offset="100%" stopColor="var(--s-gold-500)" stopOpacity="0" />
-        </linearGradient>
-      </defs>
-      
-      {/* Top left crosshair */}
-      <g className="h-cross h-cross-tl" style={{ transform: 'translate(8%, 15%)' }}>
-        <line x1="-32" y1="0" x2="32" y2="0" stroke="url(#gold-fade-h)" strokeWidth="1" />
-        <line x1="0" y1="-32" x2="0" y2="32" stroke="url(#gold-fade-v)" strokeWidth="1" />
-        <circle cx="0" cy="0" r="3" fill="none" stroke="var(--s-gold-500)" strokeWidth="0.5" opacity="0.4" />
-      </g>
-      
-      {/* Top right crosshair */}
-      <g className="h-cross h-cross-tr" style={{ transform: 'translate(92%, 12%)' }}>
-        <line x1="-24" y1="0" x2="24" y2="0" stroke="url(#gold-fade-h)" strokeWidth="1" />
-        <line x1="0" y1="-24" x2="0" y2="24" stroke="url(#gold-fade-v)" strokeWidth="1" />
-        <circle cx="0" cy="0" r="2" fill="none" stroke="var(--s-gold-500)" strokeWidth="0.5" opacity="0.35" />
-      </g>
-      
-      {/* Bottom left */}
-      <g className="h-cross h-cross-bl" style={{ transform: 'translate(5%, 78%)' }}>
-        <line x1="-20" y1="0" x2="20" y2="0" stroke="url(#gold-fade-h)" strokeWidth="1" />
-        <line x1="0" y1="-20" x2="0" y2="20" stroke="url(#gold-fade-v)" strokeWidth="1" />
-      </g>
-      
-      {/* Bottom right */}
-      <g className="h-cross h-cross-br" style={{ transform: 'translate(95%, 82%)' }}>
-        <line x1="-28" y1="0" x2="28" y2="0" stroke="url(#gold-fade-h)" strokeWidth="1" />
-        <line x1="0" y1="-28" x2="0" y2="28" stroke="url(#gold-fade-v)" strokeWidth="1" />
-        <circle cx="0" cy="0" r="4" fill="none" stroke="var(--s-gold-500)" strokeWidth="0.5" opacity="0.3" />
-      </g>
-
-      {/* Center accent lines - extending from content */}
-      <line 
-        className="h-line-left"
-        x1="0" y1="50%" x2="18%" y2="50%" 
-        stroke="url(#gold-fade-h)" 
-        strokeWidth="1" 
-        opacity="0.5"
-      />
-      <line 
-        className="h-line-right"
-        x1="82%" y1="50%" x2="100%" y2="50%" 
-        stroke="url(#gold-fade-h)" 
-        strokeWidth="1" 
-        opacity="0.5"
-      />
-    </svg>
+      <span style={{ position: 'absolute', left: 0, right: 0, top: '50%', height: 1, background: 'var(--s-gold-a40)', transform: 'translateY(-50%)' }} />
+      <span style={{ position: 'absolute', top: 0, bottom: 0, left: '50%', width: 1, background: 'var(--s-gold-a40)', transform: 'translateX(-50%)' }} />
+    </span>
   )
 }
 
@@ -119,73 +71,15 @@ export default function NewHero() {
   useGSAP(
     () => {
       if (prefersReducedMotion()) return
-
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+      tl.from('.h-eye', { opacity: 0, y: 8, duration: 0.5 }, 0)
+        .from('.h-headline', { opacity: 0, y: 24, duration: 0.9, ease: 'power4.out' }, 0.15)
+        .from('.h-sub',   { opacity: 0, y: 14, duration: 0.7 }, 0.45)
+        .from('.h-cta > *', { opacity: 0, y: 12, duration: 0.6, stagger: 0.08 }, 0.62)
+        .from('.h-proof-cell', { opacity: 0, y: 14, duration: 0.6, stagger: 0.06 }, 0.85)
+        .from('.h-scroll', { opacity: 0, duration: 0.6 }, 1.15)
+        .from('.h-plus',   { opacity: 0, scale: 0.6, duration: 0.6, stagger: 0.08 }, 0.1)
 
-      // Staggered content reveal
-      tl.from('.h-eye', { opacity: 0, y: 12, duration: 0.6 }, 0)
-        .from('.h-headline-word', { 
-          opacity: 0, 
-          y: 40, 
-          rotationX: -15,
-          transformOrigin: 'center bottom',
-          duration: 0.8, 
-          ease: 'power4.out',
-          stagger: 0.08 
-        }, 0.1)
-        .from('.h-sub', { opacity: 0, y: 16, duration: 0.7 }, 0.5)
-        .from('.h-cta > *', { opacity: 0, y: 14, duration: 0.5, stagger: 0.06 }, 0.7)
-        .from('.h-stat-card', { opacity: 0, y: 20, duration: 0.6, stagger: 0.05 }, 0.9)
-        .from('.h-scroll', { opacity: 0, duration: 0.5 }, 1.2)
-
-      // Pattern elements fade in
-      tl.from('.h-cross', { 
-        opacity: 0, 
-        scale: 0.5, 
-        duration: 0.8, 
-        stagger: 0.1,
-        ease: 'power2.out' 
-      }, 0.2)
-      tl.from('.h-line-left, .h-line-right', {
-        opacity: 0,
-        duration: 1,
-      }, 0.6)
-
-      // Subtle floating animation for crosshairs
-      gsap.to('.h-cross-tl', {
-        y: 8,
-        x: 4,
-        duration: 6,
-        ease: 'sine.inOut',
-        repeat: -1,
-        yoyo: true,
-      })
-      gsap.to('.h-cross-tr', {
-        y: -6,
-        x: -5,
-        duration: 7,
-        ease: 'sine.inOut',
-        repeat: -1,
-        yoyo: true,
-      })
-      gsap.to('.h-cross-bl', {
-        y: -5,
-        x: 6,
-        duration: 5.5,
-        ease: 'sine.inOut',
-        repeat: -1,
-        yoyo: true,
-      })
-      gsap.to('.h-cross-br', {
-        y: 7,
-        x: -4,
-        duration: 6.5,
-        ease: 'sine.inOut',
-        repeat: -1,
-        yoyo: true,
-      })
-
-      // Scroll indicator pulse
       gsap.to('.h-scroll-line', {
         scaleY: 1,
         transformOrigin: 'top center',
@@ -198,15 +92,12 @@ export default function NewHero() {
     { scope },
   )
 
-  const stats = [
-    { label: 'Markets', value: String(markets) },
-    { label: '24h Volume', value: `$${formatCompact(vol24h)}` },
-    { label: 'Open Interest', value: `$${formatCompact(oi)}` },
-    { label: 'Chain', value: 'Solana' },
+  const proof = [
+    { label: 'Markets',       value: String(markets) },
+    { label: '24h volume',    value: `$${formatCompact(vol24h)}` },
+    { label: 'Open interest', value: `$${formatCompact(oi)}` },
+    { label: 'Chain',         value: 'Solana' },
   ]
-
-  // Split headline into words for staggered animation
-  const headlineWords = hero.headline.split(' ')
 
   return (
     <section
@@ -215,7 +106,6 @@ export default function NewHero() {
       style={{
         position: 'relative',
         minHeight: '100vh',
-        minHeight: '100dvh',
         background: 'var(--s-ink-stage)',
         color: 'var(--s-ink-100)',
         overflow: 'hidden',
@@ -224,103 +114,106 @@ export default function NewHero() {
         alignItems: 'center',
         justifyContent: 'center',
         paddingInline: 'clamp(20px, 5vw, 64px)',
-        paddingBlock: 'clamp(100px, 12vw, 160px) clamp(80px, 10vw, 120px)',
+        paddingBlock: 'clamp(120px, 14vw, 180px) clamp(60px, 8vw, 100px)',
       }}
     >
-      {/* Subtle radial glow at bottom */}
+      <div
+        aria-hidden
+        className="h-grid"
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage:
+            'linear-gradient(var(--s-ink-06) 1px, transparent 1px), linear-gradient(90deg, var(--s-ink-06) 1px, transparent 1px)',
+          backgroundSize: '64px 64px, 64px 64px',
+          maskImage:
+            'radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 80%)',
+          WebkitMaskImage:
+            'radial-gradient(ellipse 60% 50% at 50% 50%, black 0%, transparent 80%)',
+          opacity: 0.55,
+          pointerEvents: 'none',
+        }}
+      />
+
       <div
         aria-hidden
         style={{
           position: 'absolute',
           left: '50%',
-          bottom: '-10%',
-          width: 'min(1600px, 140vw)',
-          height: '60vh',
+          bottom: '-5%',
+          width: 'min(1400px, 120vw)',
+          height: '70vh',
           transform: 'translateX(-50%)',
           background:
-            'radial-gradient(ellipse 55% 70% at 50% 100%, rgba(255, 215, 0, 0.06) 0%, transparent 65%)',
+            'radial-gradient(ellipse 50% 60% at 50% 100%, rgba(255, 210, 80, 0.10) 0%, rgba(255, 180, 40, 0.04) 38%, transparent 70%)',
           pointerEvents: 'none',
+          filter: 'blur(4px)',
         }}
       />
 
-      {/* Signature pattern */}
-      <SignaturePattern />
+      <span className="h-plus"><PlusMark pos="tl" /></span>
+      <span className="h-plus"><PlusMark pos="tr" /></span>
+      <span className="h-plus"><PlusMark pos="bl" /></span>
+      <span className="h-plus"><PlusMark pos="br" /></span>
 
-      {/* Main content */}
       <div
         style={{
           position: 'relative',
-          maxWidth: 1200,
+          maxWidth: 1120,
           width: '100%',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
           textAlign: 'center',
-          gap: 0,
+          gap: 'clamp(20px, 2.6vw, 36px)',
         }}
       >
-        {/* Eyebrow */}
         <span
           className="h-eye"
           style={{
             fontFamily: 'var(--s-font-display)',
-            fontSize: 'clamp(12px, 0.9vw, 14px)',
+            fontSize: 13,
             fontWeight: 500,
-            letterSpacing: '0.02em',
+            letterSpacing: '-0.005em',
             color: 'var(--s-gold-500)',
-            marginBottom: 'clamp(20px, 2.5vw, 32px)',
           }}
         >
           {hero.eyebrow}
         </span>
 
-        {/* Headline - much larger, tighter tracking */}
         <h1
           className="h-headline"
           style={{
             margin: 0,
             fontFamily: 'var(--s-font-display)',
-            fontSize: 'clamp(44px, 7.5vw, 120px)',
+            fontSize: 'clamp(40px, 6.2vw, 104px)',
             fontWeight: 600,
-            letterSpacing: '-0.035em',
-            lineHeight: 0.95,
+            letterSpacing: '-0.03em',
+            lineHeight: 1.02,
             color: 'var(--s-ink-100)',
-            maxWidth: '15ch',
-            marginBottom: 'clamp(24px, 3vw, 40px)',
+            textWrap: 'balance',
+            maxWidth: '18ch',
           }}
         >
-          {headlineWords.map((word, i) => (
-            <span
-              key={i}
-              className="h-headline-word"
-              style={{ 
-                display: 'inline-block',
-                marginRight: '0.28em',
-              }}
-            >
-              {word}
-            </span>
-          ))}
+          {hero.headline}
         </h1>
 
-        {/* Sub - tighter, more technical feel */}
         <p
           className="h-sub"
           style={{
             margin: 0,
-            maxWidth: '58ch',
+            maxWidth: '62ch',
             fontFamily: 'var(--s-font-body)',
-            fontSize: 'clamp(15px, 1.1vw, 17px)',
-            lineHeight: 1.6,
+            fontSize: 'clamp(15px, 1.15vw, 18px)',
+            lineHeight: 1.55,
             color: 'var(--s-ink-55)',
             fontWeight: 400,
-            marginBottom: 'clamp(32px, 3.5vw, 48px)',
+            textWrap: 'pretty',
           }}
         >
           {hero.sub}
         </p>
 
-        {/* CTAs */}
         <div
           className="h-cta"
           style={{
@@ -328,14 +221,14 @@ export default function NewHero() {
             flexWrap: 'wrap',
             alignItems: 'center',
             justifyContent: 'center',
-            gap: 14,
-            marginBottom: 'clamp(48px, 5vw, 72px)',
+            gap: 12,
+            marginTop: 4,
           }}
         >
           <Link to="/trade" className="h-cta-primary">
             {hero.ctaPrimary}
-            <svg width="15" height="15" viewBox="0 0 15 15" fill="none" aria-hidden>
-              <path d="M2.5 7.5h10M8.5 3.5l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+              <path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
             </svg>
           </Link>
           <Link to="/docs" className="h-cta-secondary">
@@ -343,49 +236,45 @@ export default function NewHero() {
           </Link>
         </div>
 
-        {/* Stats grid - more prominent, tile-like */}
         <div
-          className="h-stats"
           style={{
+            marginTop: 'clamp(28px, 3.5vw, 48px)',
             width: '100%',
-            maxWidth: 900,
+            maxWidth: 980,
             display: 'grid',
-            gridTemplateColumns: 'repeat(4, 1fr)',
-            gap: 1,
-            background: 'var(--s-ink-border)',
-            borderRadius: 'var(--s-radius-md)',
-            overflow: 'hidden',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))',
+            borderTop: '1px solid var(--s-ink-hairline)',
+            borderBottom: '1px solid var(--s-ink-hairline)',
+            paddingBlock: 'clamp(18px, 2vw, 28px)',
           }}
         >
-          {stats.map((stat) => (
+          {proof.map((p, i) => (
             <div
-              key={stat.label}
-              className="h-stat-card"
+              key={p.label}
+              className="h-proof-cell"
               style={{
-                background: 'var(--s-ink-panel)',
-                padding: 'clamp(20px, 2.5vw, 32px) clamp(16px, 2vw, 24px)',
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
-                gap: 10,
+                gap: 8,
+                borderLeft: i === 0 ? 'none' : '1px solid var(--s-ink-divider)',
+                paddingInline: 'clamp(12px, 1.4vw, 20px)',
               }}
             >
               <span
                 style={{
                   fontFamily: 'var(--s-font-body)',
-                  fontSize: 'clamp(10px, 0.75vw, 11px)',
-                  fontWeight: 500,
+                  fontSize: 11,
+                  fontWeight: 400,
                   color: 'var(--s-ink-40)',
-                  textTransform: 'uppercase',
-                  letterSpacing: '0.06em',
                 }}
               >
-                {stat.label}
+                {p.label}
               </span>
               <span
                 style={{
                   fontFamily: 'var(--s-font-display)',
-                  fontSize: 'clamp(20px, 2.2vw, 32px)',
+                  fontSize: 'clamp(18px, 1.8vw, 26px)',
                   fontWeight: 600,
                   letterSpacing: '-0.02em',
                   color: 'var(--s-ink-100)',
@@ -393,42 +282,39 @@ export default function NewHero() {
                   lineHeight: 1,
                 }}
               >
-                {stat.value}
+                {p.value}
               </span>
             </div>
           ))}
         </div>
       </div>
 
-      {/* Scroll indicator */}
       <div
         className="h-scroll"
         aria-hidden
         style={{
           position: 'absolute',
-          bottom: 'clamp(24px, 3vw, 40px)',
+          bottom: 'clamp(20px, 2.5vw, 32px)',
           left: '50%',
           transform: 'translateX(-50%)',
           display: 'flex',
           flexDirection: 'column',
           alignItems: 'center',
-          gap: 8,
+          gap: 10,
           pointerEvents: 'none',
         }}
       >
         <span
           style={{
             fontFamily: 'var(--s-font-body)',
-            fontSize: 10,
-            fontWeight: 500,
+            fontSize: 11,
             color: 'var(--s-ink-28)',
-            letterSpacing: '0.08em',
-            textTransform: 'uppercase',
+            letterSpacing: '0.02em',
           }}
         >
           Scroll
         </span>
-        <div style={{ width: 1, height: 24, background: 'var(--s-ink-10)', position: 'relative', overflow: 'hidden' }}>
+        <div style={{ width: 1, height: 28, background: 'var(--s-ink-06)', position: 'relative', overflow: 'hidden' }}>
           <span
             className="h-scroll-line"
             style={{
@@ -443,82 +329,30 @@ export default function NewHero() {
       </div>
 
       <style>{`
-        /* Primary CTA */
         .h-cta-primary {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          height: 52px;
-          padding: 0 28px;
-          background: var(--s-gold-500);
-          color: #080700;
-          text-decoration: none;
-          font-family: var(--s-font-display);
-          font-size: 14px;
-          font-weight: 600;
-          letter-spacing: -0.01em;
-          border-radius: var(--s-radius-sm);
-          border: none;
-          transition: transform 160ms var(--s-ease-out), background 160ms var(--s-ease-out), box-shadow 160ms var(--s-ease-out);
-          will-change: transform;
+          display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+          height: 50px; padding: 0 24px;
+          background: var(--s-gold-500); color: #0a0700; text-decoration: none;
+          font-family: var(--s-font-display); font-size: 14px; font-weight: 600; letter-spacing: -0.005em;
+          border-radius: var(--s-radius-sm); border: none;
+          transition-property: transform, background; transition-duration: 160ms;
+          transition-timing-function: var(--s-ease-out); will-change: transform;
         }
-        .h-cta-primary:hover {
-          background: var(--s-gold-400);
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(255, 215, 0, 0.2);
-        }
-        .h-cta-primary:active {
-          transform: translateY(0);
-        }
-        .h-cta-primary:focus-visible {
-          outline: 2px solid var(--s-gold-200);
-          outline-offset: 3px;
-        }
+        .h-cta-primary:hover  { background: var(--s-gold-400); transform: translateY(-1px); }
+        .h-cta-primary:active { transform: translateY(0); }
+        .h-cta-primary:focus-visible  { outline: 2px solid var(--s-gold-200); outline-offset: 3px; }
 
-        /* Secondary CTA */
         .h-cta-secondary {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 10px;
-          height: 52px;
-          padding: 0 26px;
-          background: transparent;
-          color: var(--s-ink-90);
-          text-decoration: none;
-          font-family: var(--s-font-display);
-          font-size: 14px;
-          font-weight: 500;
-          letter-spacing: -0.01em;
-          border-radius: var(--s-radius-sm);
-          border: 1px solid var(--s-ink-18);
-          transition: border-color 160ms var(--s-ease-out), background 160ms var(--s-ease-out), color 160ms var(--s-ease-out);
+          display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+          height: 50px; padding: 0 22px;
+          background: transparent; color: var(--s-ink-100); text-decoration: none;
+          font-family: var(--s-font-display); font-size: 14px; font-weight: 500; letter-spacing: -0.005em;
+          border-radius: var(--s-radius-sm); border: 1px solid var(--s-ink-18);
+          transition-property: border-color, color, background; transition-duration: 160ms;
+          transition-timing-function: var(--s-ease-out);
         }
-        .h-cta-secondary:hover {
-          border-color: var(--s-ink-40);
-          background: var(--s-ink-06);
-          color: var(--s-ink-100);
-        }
-        .h-cta-secondary:focus-visible {
-          outline: 2px solid var(--s-gold-300);
-          outline-offset: 3px;
-        }
-
-        /* Stat card hover */
-        .h-stat-card {
-          transition: background 200ms var(--s-ease-out);
-        }
-        .h-stat-card:hover {
-          background: var(--s-ink-raised);
-        }
-
-        /* Responsive stats grid */
-        @media (max-width: 640px) {
-          .h-stats {
-            grid-template-columns: repeat(2, 1fr) !important;
-          }
-        }
+        .h-cta-secondary:hover { border-color: var(--s-ink-40); background: var(--s-ink-06); }
+        .h-cta-secondary:focus-visible { outline: 2px solid var(--s-gold-300); outline-offset: 3px; }
       `}</style>
     </section>
   )
